@@ -10,8 +10,7 @@ const login = require('../controllers/users/login');
 const signUp = require('../controllers/users/sign-up');
 const cvList = require('../controllers/users/list');
 const mostviewCV=require('../controllers/users/most-view-cv');
-const detailCV=require('../controllers/users/detailCV');
-const updateCV=require('../controllers/users/update-cv');
+const updateProfile=require('../controllers/users/update-profile');
 
 
 const Joi = require('joi');
@@ -73,33 +72,33 @@ module.exports = [
             plugins: plugins.swaggerPlugin
         }
     },
-    // {
-    //     method: 'PUT',
-    //     path: config.apiPrefix + '/User/updateCV',
-    //     config: {
-    //         description: 'updateCV',
-    //         notes: 'updateCV.',
-    //         tags: ['api', 'User'],
-    //         auth: false,
-    //         handler: (request, reply) => {
-    //             updateCV(request.payload, (err, results) => {
-    //                 if (err) {
-    //                     console.log(err);
-    //                     reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
-    //                 } else {
-    //                     reply(results);
-    //                 }
-    //             });
-    //         },
-    //         validate: {
-    //             payload: validator.updateCV,
-    //             failAction: (request, reply, source, err) => {
-    //                 reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
-    //             }
-    //         },
-    //         plugins: plugins.swaggerPlugin
-    //     }
-    // },
+    {
+        method: 'PUT',
+        path: config.apiPrefix + '/User/updateProfile',
+        config: {
+            description: 'updateProfile',
+            notes: 'updateProfile.',
+            tags: ['api', 'User'],
+            auth: false,
+            handler: (request, reply) => {
+                updateProfile(request.payload, (err, results) => {
+                    if (err) {
+                        console.log(err);
+                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                    } else {
+                        reply(results);
+                    }
+                });
+            },
+            validate: {
+                payload: validator.updateProfile,
+                failAction: (request, reply, source, err) => {
+                    reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+                }
+            },
+            plugins: plugins.swaggerPlugin
+        }
+    },
 
    
     
