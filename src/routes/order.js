@@ -9,6 +9,7 @@ const config = require('../../configs/config');
 const validator = require('../validators/addorder');
 const addOrder= require('../controllers/order/add-order');
 const orderStatus=require('../controllers/order/order-status');
+const orderList=require('../controllers/order/all-order')
 
 
 module.exports = [
@@ -69,7 +70,34 @@ module.exports = [
         plugins: plugins.swaggerPlugin
     }
 },
+{
+    method: 'GET',
+    path: config.apiPrefix + '/order/orderList',
+    config: {
+        description: 'all order list',
+        notes: 'all order list.',
+        tags: ['api', 'Order'],
+        auth: false,
 
+        handler: (request, reply) => {
+            orderList(request.query, (err, results) => {
+                if (err) {
+                    console.log(err);
+                    reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                } else {
+                    reply(results);
+                }
+            });
+        },
+        validate: {
+            query: validator.status,
+            failAction: (request, reply, source, err) => {
+                reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+            }
+        },
+        plugins: plugins.swaggerPlugin
+    }
+},
 
 ]
 

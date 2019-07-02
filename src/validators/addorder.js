@@ -7,7 +7,7 @@ const addOrder=Joi.array().items({
     item_name : Joi.string().empty('').optional(),
     item_supplier_name: Joi.string().empty('').optional(),
     item_type: Joi.string().empty('').optional(),
-    item_id:Joi.string().empty('').optional(),
+    item_id:Joi.number().integer().optional(),
     location:Joi.string().empty('').optional(),
     latitude:Joi.string().empty('').optional(),
     longitude:Joi.string().empty('').optional(),

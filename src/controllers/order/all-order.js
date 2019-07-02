@@ -11,20 +11,21 @@ const orderModel = 'orders';
 const moment=require('moment');
 
 module.exports = (req, callback) => {
+
+    console.log(req);
+    
     
     model[orderModel].findAll({
 
         where: {
               user_id:req.user_id
         },
- 
+       
         order: [ [ 'id', 'DESC' ]]
 
 
-    }).then(orderStatus => {
-
-
-        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderStatus));
+    }).then(orderlist => {
+        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderlist));
 
 
     })

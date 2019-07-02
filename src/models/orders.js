@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
                 type:DataTypes.STRING(45)
             },
             item_id:{
-                type:DataTypes.STRING(45)
+                type:DataTypes.INTEGER(11)
             },
             location:{
                 type:DataTypes.STRING(200)
@@ -30,16 +30,16 @@ module.exports = function (sequelize, DataTypes) {
                 type:DataTypes.STRING(200)
             },
             quantity:{
-                type:DataTypes.STRING(200)
+                type:DataTypes.INTEGER(11)
             },
             price:{
-                type:DataTypes.STRING(200)
+                type:DataTypes.INTEGER(11)
             },
             user_id:{
                 type:DataTypes.INTEGER(4)
             },
             datetime:{
-                type:DataTypes.DATE
+                type:DataTypes.STRING(100)
             },
             status:{
                 type:DataTypes.STRING(),

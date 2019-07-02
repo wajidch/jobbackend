@@ -22,14 +22,43 @@ const orderModel = 'orders';
  */
 module.exports = (req, callback) => {
 
-    
-             model[orderModel].bulkCreate(req
-             ).then(updated=>{
 
-                return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ADDITION_SUCCESSFULL, updated));
+   console.log(req)
+   let itemId=[];
+   let date=[];
+   let userId=[];
+
+   req.forEach(detail=>{
+
+       itemId.push(detail.item_id);
+       date.push(detail.datetime);
+       userId.push(detail.user_id);
+   })
+ 
+    model[orderModel].findAll({
+       where:{
+         item_id:{[Op.in]:itemId},
+         datetime:{[Op.in]:date},
+         user_id:{[Op.in]:userId},
+
+       }
+    }).then(orders =>{
+
+      if(orders.length){
+         return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ALREADY_EXISTS));
+
+      }
+      else{
+      model[orderModel].bulkCreate(req
+         ).then(updated=>{
+
+            return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ADDITION_SUCCESSFULL, updated));
 
 
-             })
+         })
+      }
+    })
+           
 
 
         
