@@ -39,7 +39,7 @@ module.exports = function (sequelize, DataTypes) {
                 type:DataTypes.INTEGER(4)
             },
             datetime:{
-                type:DataTypes.STRING(100)
+                type:DataTypes.INTEGER(100)
             },
             status:{
                 type:DataTypes.STRING(),

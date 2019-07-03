@@ -11,10 +11,10 @@ const addOrder=Joi.array().items({
     location:Joi.string().empty('').optional(),
     latitude:Joi.string().empty('').optional(),
     longitude:Joi.string().empty('').optional(),
-    quantity:Joi.string().empty('').optional(),
-    price:Joi.string().empty('').optional(),
+    quantity:Joi.number().empty('').optional(),
+    price:Joi.number().empty('').optional(),
     user_id:Joi.number().empty('').optional(),
-    datetime:Joi.date().empty('').optional(),
+    datetime:Joi.number().empty('').optional(),
     status:Joi.string().default('pending').optional()
    
    
