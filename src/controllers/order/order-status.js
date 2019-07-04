@@ -15,7 +15,8 @@ module.exports = (req, callback) => {
     model[orderModel].findAll({
 
         where: {
-              user_id:req.user_id
+              user_id:req.user_id,
+              status:'pending'
         },
  
         order: [ [ 'id', 'DESC' ]]
