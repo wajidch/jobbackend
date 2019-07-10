@@ -12,7 +12,7 @@ const orderList = require('../controllers/admin/order-list');
 module.exports = [
     {
         method: 'GET',
-        path: config.apiPrefix + '/order/orderList',
+        path: config.apiPrefix + '/admin/orderList',
         config: {
             description: 'all order list',
             notes: 'all order list.',

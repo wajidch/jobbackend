@@ -7,6 +7,8 @@ const model = require('../../models');
 const Op = model.Sequelize.Op;
 
 const orderModel = 'orders';
+const orderlocationModel = 'order_location';
+
 
 const moment = require('moment');
 
@@ -14,48 +16,21 @@ module.exports = (req, callback) => {
 
 
 
-    model[orderModel].findAll({
+    model[orderlocationModel].findAll({
 
 
-        order: [['id', 'DESC']]
+        order: [['id', 'DESC']],
+
+        include:[
+            {model:model[orderModel],as:'items'}
+        ]
 
 
     }).then(orderlist => {
 
-        let orderlistObj = {
-            latitude: 0,
-            longitude: 0,
-            location: '',
-            itemList: []
-        }
-
-        orderlist.forEach(order => {
-            orderlistObj.latitude = order[0].latitude;
-            orderlistObj.longitude = order[0].longitude;
-            orderlistObj.location = order[0].location;
-            orderlistObj.itemList.push({
-
-                id: order.id,
-                item_name: order.item_name,
-                item_supplier_name: order.item_supplier_name,
-                item_type: order.item_type,
-                item_id: order.item_id,
-                quantity: order.quantity,
-                price: order.price,
-                user_id: order.user_id,
-                datetime: order.datetime,
-                status: order.status
 
 
-
-            })
-
-        });
-
-
-
-
-        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderlistObj));
+        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderlist));
 
 
     })
