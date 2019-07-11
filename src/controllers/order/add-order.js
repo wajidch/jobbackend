@@ -11,6 +11,7 @@ const model = require('../../models');
 const Op = model.Sequelize.Op;
 const orderModel = 'orders';
 
+const orderlocationModel = 'order_location';
 
 
 
@@ -23,16 +24,24 @@ const orderModel = 'orders';
 module.exports = (req, callback) => {
 
 
-   console.log(req)
    let itemId=[];
    let date=[];
    let userId=[];
+   let orderLocation=[];
 
+   let ordersArray=[]
    req.forEach(detail=>{
 
        itemId.push(detail.item_id);
        date.push(detail.datetime);
        userId.push(detail.user_id);
+       orderLocation.push({
+          location:detail.location,
+          latitude:detail.latitude,
+          longitude:detail.longitude
+       })
+
+     
    })
  
     model[orderModel].findAll({
@@ -49,15 +58,40 @@ module.exports = (req, callback) => {
 
       }
       else{
-      model[orderModel].bulkCreate(req
+
+         model[orderlocationModel].bulkCreate(orderLocation).then(created =>{
+
+            console.log("c",created)
+            req.forEach(detail=>{
+               ordersArray.push({
+                  item_name:detail.item_name,
+                  item_supplier_name: detail.item_supplier_name,
+                   item_type: detail.item_type,
+                   item_id:detail.item_id,
+                   location:detail.location,
+                   latitude:detail.latitude,
+                   longitude:detail.longitude,
+                   quantity:detail.quantity,
+                   price:detail.price,
+                   user_id:detail.user_id,
+                   datetime:detail.datetime,
+                   status:detail.status,
+                   order_location_id:created[0].id
+                })
+            })
+         
+            //console.log("order",ordersArray)
+      model[orderModel].bulkCreate(ordersArray
          ).then(updated=>{
 
             return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ADDITION_SUCCESSFULL, updated));
 
 
          })
+      })
       }
     })
+    
            
 
 

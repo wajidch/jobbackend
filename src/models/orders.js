@@ -38,6 +38,10 @@ module.exports = function (sequelize, DataTypes) {
             user_id:{
                 type:DataTypes.INTEGER(4)
             },
+            order_location_id:{
+                type:DataTypes.INTEGER(4)
+
+            },
             datetime:{
                 type:DataTypes.INTEGER(100)
             },
