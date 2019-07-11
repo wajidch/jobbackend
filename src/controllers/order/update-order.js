@@ -22,7 +22,7 @@ const orderModel = 'orders';
  */
 module.exports = (req, callback) => {
 
-    console.log(req)
+   // console.log(req)
 
     var promises = [];
     req.forEach(function(order){
@@ -42,6 +42,7 @@ module.exports = (req, callback) => {
       datetime: order.datetime,
       status: order.status
     }
+    console.log(orderUpdate)
    promises.push(model[orderModel].update(orderUpdate,{where : {id:order.id}}));
 });
 Promise.all(promises).then(function(){

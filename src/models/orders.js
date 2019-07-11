@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
                 type:DataTypes.INTEGER(100)
             },
             status:{
-                type:DataTypes.STRING(),
+                type:DataTypes.STRING(45),
                 default:'pending'
             }
                     
