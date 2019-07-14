@@ -26,7 +26,7 @@ module.exports = (req, callback) => {
 
              model[userModel].update(req,{
                  where:{
-                     id:req.user_id
+                     id:req.id
                  }
              }
              ).then(updated=>{

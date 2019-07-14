@@ -61,7 +61,6 @@ module.exports = (req, callback) => {
 
          model[orderlocationModel].bulkCreate(orderLocation).then(created =>{
 
-            console.log("c",created)
             req.forEach(detail=>{
                ordersArray.push({
                   item_name:detail.item_name,
@@ -80,7 +79,7 @@ module.exports = (req, callback) => {
                 })
             })
          
-            //console.log("order",ordersArray)
+            console.log("order",ordersArray)
       model[orderModel].bulkCreate(ordersArray
          ).then(updated=>{
 

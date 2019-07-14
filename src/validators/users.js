@@ -14,11 +14,12 @@ const add = Joi.object({
 });
 
 const updateProfile={
-    user_id:Joi.number().required(),
+    id:Joi.number().required(),
     name: Joi.string().empty('').optional(),
     password: Joi.string().empty('').optional(),
     phone:Joi.string().empty('').optional(),
-    profile_picture:Joi.string().empty('').optional()
+    profile_picture:Joi.string().empty('').optional(),
+    email:Joi.string().empty('').optional()
     
 }
 
