@@ -13,24 +13,35 @@ const orderlocationModel = 'order_location';
 const moment = require('moment');
 
 module.exports = (req, callback) => {
-let startDate=moment(req.startDate).startOf('day').format("YYYY-DD-MM hh:mm:ss");
-let endDate=moment(req.endDate).endOf('day').format("YYYY-DD-MM hh:mm:ss");
+    let startDate = moment(new Date(req.startDate)).startOf('day').format("YYYY-MM-DD HH:mm:ss");
 
-console.log('req',startDate,endDate)
+    let endDate = moment(new Date(req.endDate)).endOf('day').format("YYYY-MM-DD HH:mm:ss")
+
+    console.log('req', req.startDate, req.endDate)
 
 
     model[orderlocationModel].findAll({
 
-         
+
+        where: {
+            // created_date: {
+            //     [Op.gte]: startDate,
+            //     [Op.lte]: endDate
+            // },
+            created_date: {
+                // [Op.gte]: startDate,
+                // [Op.lte]: endDate
+                [Op.between]: [startDate, endDate],
+
+            },
+
+        },
+
 
         order: [['id', 'DESC']],
 
-        include:[
-            {model:model[orderModel],as:'items',where:{ 
-                created_date:{
-                    [Op.gte]: startDate,
-                    [Op.lte]:endDate
-            },}}
+        include: [
+            { model: model[orderModel], as: 'items' }
         ]
 
 
