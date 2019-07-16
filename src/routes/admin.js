@@ -9,6 +9,7 @@ const validator = require('../validators/admin');
 
 const orderList = require('../controllers/admin/order-list');
 const updateOrderStatus= require('../controllers/admin/update-order-status');
+const orderdetail=require('../controllers/admin/order-detail-from-to');
 
 
 module.exports = [
@@ -32,6 +33,34 @@ module.exports = [
                 });
             },
 
+            plugins: plugins.swaggerPlugin
+        }
+    },
+    {
+        method: 'GET',
+        path: config.apiPrefix + '/admin/orderDetailfromto',
+        config: {
+            description: 'all order on based of date filter',
+            notes: 'all order list.',
+            tags: ['api', 'Admin'],
+            auth: false,
+
+            handler: (request, reply) => {
+                orderdetail(request.query, (err, results) => {
+                    if (err) {
+                        console.log(err);
+                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                    } else {
+                        reply(results);
+                    }
+                });
+            },
+            validate: {
+                query: validator.orderdetail,
+                failAction: (request, reply, source, err) => {
+                    reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+                }
+            },
             plugins: plugins.swaggerPlugin
         }
     },

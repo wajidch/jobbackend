@@ -48,6 +48,9 @@ module.exports = function (sequelize, DataTypes) {
             status:{
                 type:DataTypes.STRING(45),
                 default:'pending'
+            },
+            created_date:{
+                type:DataTypes.DATE
             }
                     
         
