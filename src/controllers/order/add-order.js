@@ -30,17 +30,19 @@ module.exports = (req, callback) => {
    let orderLocation=[];
 
    let ordersArray=[]
+   let index=0;
    req.forEach(detail=>{
-
+index++
        itemId.push(detail.item_id);
        date.push(detail.datetime);
        userId.push(detail.user_id);
+       if(index===1){
        orderLocation.push({
           location:detail.location,
           latitude:detail.latitude,
           longitude:detail.longitude
        })
-
+      }
      
    })
  

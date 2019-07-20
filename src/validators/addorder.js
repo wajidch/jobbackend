@@ -30,6 +30,7 @@ const updateOrder=Joi.array().items({
     latitude:Joi.string().empty('').optional(),
     longitude:Joi.string().empty('').optional(),
     quantity:Joi.number().empty('').optional(),
+    order_location_id:Joi.number().empty('').optional(),
     price:Joi.number().empty('').optional(),
     user_id:Joi.number().empty('').optional(),
     datetime:Joi.number().empty('').optional(),
