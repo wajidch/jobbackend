@@ -11,6 +11,7 @@ const signUp = require('../controllers/users/sign-up');
 const cvList = require('../controllers/users/list');
 const mostviewCV=require('../controllers/users/most-view-cv');
 const updateProfile=require('../controllers/users/update-profile');
+const registeruserList=require('../controllers/users/register-user');
 
 
 const Joi = require('joi');
@@ -99,6 +100,31 @@ module.exports = [
             plugins: plugins.swaggerPlugin
         }
     },
+
+    
+{
+    method: 'GET',
+    path: config.apiPrefix + '/User/RegisterUserList',
+    config: {
+        description: 'all order list',
+        notes: 'all order list.',
+        tags: ['api', 'User'],
+        auth: false,
+
+        handler: (request, reply) => {
+            registeruserList(request.query, (err, results) => {
+                if (err) {
+                    console.log(err);
+                    reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                } else {
+                    reply(results);
+                }
+            });
+        },
+      
+        plugins: plugins.swaggerPlugin
+    }
+},
 
    
     
