@@ -10,9 +10,9 @@ const hashPasswordUtility = require('../../utilities/password').hashPassword;
 const model = require('../../models');
 const Op = model.Sequelize.Op;
 const orderModel = 'orders';
-
+const request = require('request-promise');
 const orderlocationModel = 'order_location';
-
+const axios = require('axios');
 
 
 /**
@@ -55,6 +55,12 @@ index++
        }
     }).then(orders =>{
 
+      
+               
+
+
+      
+    
       if(orders.length){
          return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ALREADY_EXISTS));
 
@@ -81,10 +87,13 @@ index++
                 })
             })
          
-            console.log("order",ordersArray)
+           
       model[orderModel].bulkCreate(ordersArray
          ).then(updated=>{
-
+          
+            console.log(ordersArray)
+            sendMessage(ordersArray);
+           
             return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ADDITION_SUCCESSFULL, updated));
 
 
@@ -98,4 +107,39 @@ index++
 
         
   
+}
+
+  // Set your app credentials
+  const credentials = {
+   apiKey: '152e524e4eca5dd914edb4ff45793f197e6833efbcd1dcbd620d5ba3f1c150c9',
+   username: 'pata_fundi',
+}
+
+// Initialize the SDK
+const AfricasTalking = require('africastalking')(credentials);
+
+// Get the SMS service
+const sms = AfricasTalking.SMS;
+
+function sendMessage(order) {
+   console.log("in",order)
+
+   const options = {
+       // Set the numbers you want to send to in international format
+       to: ['+923435020149'],
+       // Set your message
+       message: `order id:${order[0].item_id}, Details:${order[0].quantity} 
+       ${order[0].item_name}
+        ${order[0].price} 
+         ,order status:${order[0].status}`,
+      
+   }
+
+   // That’s it, hit send and we’ll take care of the rest
+   sms.send(options)
+
+       .then(res =>{
+         console.log("sdfs",res)
+       })
+       .catch(console.log);
 }

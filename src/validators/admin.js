@@ -8,7 +8,8 @@ const updateOrderStatusParam={
 }
 const orderdetail={
     startDate:joi.date().required(),
-    endDate:joi.date().required()
+    endDate:joi.date().required(),
+    status:joi.string().required()
 }
 module.exports={
     updateOrderStatusParam,

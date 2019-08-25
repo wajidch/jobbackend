@@ -28,20 +28,21 @@ module.exports = (req, callback) => {
             //     [Op.gte]: startDate,
             //     [Op.lte]: endDate
             // },
+            
             created_date: {
                 // [Op.gte]: startDate,
                 // [Op.lte]: endDate
                 [Op.between]: [startDate, endDate],
 
             },
-
+            
         },
 
 
         order: [['id', 'DESC']],
 
         include: [
-            { model: model[orderModel], as: 'items' }
+            { model: model[orderModel],where:{status:req.status}, as: 'items' }
         ]
 
 
