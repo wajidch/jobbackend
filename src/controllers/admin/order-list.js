@@ -22,7 +22,7 @@ module.exports = (req, callback) => {
         order: [['id', 'DESC']],
 
         include:[
-            {model:model[orderModel],as:'items'}
+            {model:model[orderModel],where:{status:'pending'},as:'items'}
         ]
 
 
