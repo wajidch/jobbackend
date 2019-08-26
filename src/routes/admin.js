@@ -6,6 +6,7 @@ const plugins = require('../../constants/routes-config');
 const responses = require('../utilities/responses');
 const config = require('../../configs/config');
 const validator = require('../validators/admin');
+const orderpendingList=require('../controllers/admin/order-list-pending');
 
 const orderList = require('../controllers/admin/order-list');
 const updateOrderStatus= require('../controllers/admin/update-order-status');
@@ -24,6 +25,29 @@ module.exports = [
 
             handler: (request, reply) => {
                 orderList(request.query, (err, results) => {
+                    if (err) {
+                        console.log(err);
+                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                    } else {
+                        reply(results);
+                    }
+                });
+            },
+
+            plugins: plugins.swaggerPlugin
+        }
+    },
+    {
+        method: 'GET',
+        path: config.apiPrefix + '/admin/orderListpending',
+        config: {
+            description: 'all order list',
+            notes: 'all order list.',
+            tags: ['api', 'Admin'],
+            auth: false,
+
+            handler: (request, reply) => {
+                orderpendingList(request.query, (err, results) => {
                     if (err) {
                         console.log(err);
                         reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
