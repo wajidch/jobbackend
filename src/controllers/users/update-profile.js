@@ -31,7 +31,8 @@ module.exports = (req, callback) => {
              }
              ).then(updated=>{
 
-                return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.ADDITION_SUCCESSFULL, updated));
+                
+                return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.UPDATION_SUCCESSFULL, req));
 
 
              })
