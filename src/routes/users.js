@@ -12,7 +12,8 @@ const cvList = require('../controllers/users/list');
 const mostviewCV=require('../controllers/users/most-view-cv');
 const updateProfile=require('../controllers/users/update-profile');
 const registeruserList=require('../controllers/users/register-user');
-
+const updatePassword=require('../controllers/users/update-password');
+const getuserinfo=require('../controllers/users/get-user-info');
 
 const Joi = require('joi');
 module.exports = [
@@ -101,7 +102,33 @@ module.exports = [
         }
     },
 
-    
+    {
+        method: 'PUT',
+        path: config.apiPrefix + '/User/updatePassword',
+        config: {
+            description: 'updatePassword',
+            notes: 'updatePassword.',
+            tags: ['api', 'User'],
+            auth: false,
+            handler: (request, reply) => {
+                updatePassword(request.payload, (err, results) => {
+                    if (err) {
+                        console.log(err);
+                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                    } else {
+                        reply(results);
+                    }
+                });
+            },
+            validate: {
+                payload: validator.updatePassword,
+                failAction: (request, reply, source, err) => {
+                    reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+                }
+            },
+            plugins: plugins.swaggerPlugin
+        }
+    },
 {
     method: 'GET',
     path: config.apiPrefix + '/User/RegisterUserList',
@@ -127,7 +154,34 @@ module.exports = [
 },
 
    
-    
+{
+    method: 'GET',
+    path: config.apiPrefix + '/User/getuserList',
+    config: {
+        description: 'all user list',
+        notes: 'all user list.',
+        tags: ['api', 'User'],
+        auth: false,
+
+        handler: (request, reply) => {
+            getuserinfo(request.query, (err, results) => {
+                if (err) {
+                    console.log(err);
+                    reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                } else {
+                    reply(results);
+                }
+            });
+        },
+        validate: {
+            query: validator.getuserid,
+            failAction: (request, reply, source, err) => {
+                reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+            }
+        },
+        plugins: plugins.swaggerPlugin
+    }
+}, 
    
    
     //  Product list API
