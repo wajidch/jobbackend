@@ -8,7 +8,7 @@ const add = Joi.object({
       name: Joi.string().empty('').optional(),
       email: Joi.string().empty('').optional(),
      password: Joi.string().empty('').optional(),
-   
+     phone:Joi.string().empty('').optional(),
    
 
 });

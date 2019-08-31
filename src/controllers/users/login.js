@@ -9,6 +9,7 @@ const comparePasswordUtility = require('../../utilities/password').comparePasswo
 const model = require('../../models');
 
 const userModel = 'users';
+const Op = model.Sequelize.Op;
 /**
  * User login API
  * @param req is containing payload sent from user
@@ -16,11 +17,19 @@ const userModel = 'users';
  */
 module.exports = (req, callback) => model[userModel].findOne({
     where: {
-        email: req.email,
-        password:req.password,
-        deleted:0,
+
+        [Op.or]: [
+            {
+                email: req.email,
+            },
+               { phone: req.email}
+           
+        ],
+
+        password: req.password,
+        deleted: 0,
     },
-    attributes:{  exclude: ['deleted']}
+    attributes: { exclude: ['deleted'] }
 }).then(employees => {
     if (employees) {
         return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.LOGIN_SUCCESSFULL, employees));
