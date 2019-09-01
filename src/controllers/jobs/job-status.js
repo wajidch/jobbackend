@@ -22,10 +22,10 @@ module.exports = (req, callback) => {
         order: [ [ 'id', 'DESC' ]]
 
 
-    }).then(orderStatus => {
+    }).then(jobStatus => {
 
 
-        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderStatus));
+        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, jobStatus));
 
 
     })

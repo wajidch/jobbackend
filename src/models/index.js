@@ -36,10 +36,10 @@ Object.keys(db).forEach(function (modelName) {
 });
 
 // Organizations Relations
-db.order_location.hasMany(db.orders, {
-    foreignKey: { name: 'order_location_id', allowNull: true },
-    as: 'items'
-});
+// db.order_location.hasMany(db.orders, {
+//     foreignKey: { name: 'order_location_id', allowNull: true },
+//     as: 'items'
+// });
 
 
 

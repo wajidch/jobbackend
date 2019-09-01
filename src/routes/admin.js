@@ -6,25 +6,24 @@ const plugins = require('../../constants/routes-config');
 const responses = require('../utilities/responses');
 const config = require('../../configs/config');
 const validator = require('../validators/admin');
-const orderpendingList=require('../controllers/admin/order-list-pending');
-
-const orderList = require('../controllers/admin/order-list');
-const updateOrderStatus= require('../controllers/admin/update-order-status');
-const orderdetail=require('../controllers/admin/order-detail-from-to');
+const alljoblist=require('../controllers/admin/all-job');
+const addjob=require('../controllers/admin/add-job');
+const addteam=require('../controllers/admin/add-team');
 
 
 module.exports = [
+   
     {
         method: 'GET',
-        path: config.apiPrefix + '/admin/orderList',
+        path: config.apiPrefix + '/admin/joblist',
         config: {
-            description: 'all order list',
-            notes: 'all order list.',
+            description: 'all job list',
+            notes: 'all job list.',
             tags: ['api', 'Admin'],
             auth: false,
 
             handler: (request, reply) => {
-                orderList(request.query, (err, results) => {
+                alljoblist(request.query, (err, results) => {
                     if (err) {
                         console.log(err);
                         reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
@@ -37,86 +36,63 @@ module.exports = [
             plugins: plugins.swaggerPlugin
         }
     },
-    {
-        method: 'GET',
-        path: config.apiPrefix + '/admin/orderListpending',
-        config: {
-            description: 'all order list',
-            notes: 'all order list.',
-            tags: ['api', 'Admin'],
-            auth: false,
+   
 
-            handler: (request, reply) => {
-                orderpendingList(request.query, (err, results) => {
-                    if (err) {
-                        console.log(err);
-                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
-                    } else {
-                        reply(results);
-                    }
-                });
-            },
-
-            plugins: plugins.swaggerPlugin
-        }
-    },
-    {
-        method: 'GET',
-        path: config.apiPrefix + '/admin/orderDetailfromto',
-        config: {
-            description: 'all order on based of date filter',
-            notes: 'all order list.',
-            tags: ['api', 'Admin'],
-            auth: false,
-
-            handler: (request, reply) => {
-                orderdetail(request.query, (err, results) => {
-                    if (err) {
-                        console.log(err);
-                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
-                    } else {
-                        reply(results);
-                    }
-                });
-            },
-            validate: {
-                query: validator.orderdetail,
-                failAction: (request, reply, source, err) => {
-                    reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+{
+    method: 'POST',
+    path: config.apiPrefix + '/admin/addJob',
+    config: {
+        description: 'Add job',
+        notes: 'Add job.',
+        tags: ['api', 'Admin'],
+        auth: false,
+        handler: (request, reply) => {
+            addjob(request.payload, (err, results) => {
+                if (err) {
+                    console.log(err);
+                    reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                } else {
+                    reply(results);
                 }
-            },
-            plugins: plugins.swaggerPlugin
-        }
-    },
-
-    {
-        method: 'PUT',
-        path: config.apiPrefix + '/admin/updateOrderStatus',
-        config: {
-            description: 'updateOrderStatus',
-            notes: 'updateOrderStatus.',
-            tags: ['api', 'Admin'],
-            auth: false,
-            handler: (request, reply) => {
-                updateOrderStatus(request.payload, (err, results) => {
-                    if (err) {
-                        console.log(err);
-                        reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
-                    } else {
-                        reply(results);
-                    }
-                });
-            },
-            validate: {
-                payload: validator.updateOrderStatusParam,
-                failAction: (request, reply, source, err) => {
-                    reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
-                }
-            },
-            plugins: plugins.swaggerPlugin
-        }
-    },
-
+            });
+        },
+        validate: {
+            payload: validator.addJob,
+            failAction: (request, reply, source, err) => {
+                reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+            }
+        },
+        plugins: plugins.swaggerPlugin
+    }
+},
    
     
+{
+    method: 'POST',
+    path: config.apiPrefix + '/admin/addTeam',
+    config: {
+        description: 'Add team',
+        notes: 'Add team.',
+        tags: ['api', 'Admin'],
+        auth: false,
+        handler: (request, reply) => {
+            addteam(request.payload, (err, results) => {
+                if (err) {
+                    console.log(err);
+                    reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
+                } else {
+                    reply(results);
+                }
+            });
+        },
+        validate: {
+            payload: validator.addteam,
+            failAction: (request, reply, source, err) => {
+                reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
+            }
+        },
+        plugins: plugins.swaggerPlugin
+    }
+},
+   
 ]

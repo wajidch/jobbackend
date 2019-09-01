@@ -6,30 +6,27 @@ const responses = require('../../utilities/responses');
 const model = require('../../models');
 const Op = model.Sequelize.Op;
 
-const orderModel = 'orders';
-const orderlocationModel = 'order_location';
+const jobModel = 'jobs';
 
+const moment=require('moment');
 
-const moment = require('moment');
+/**
+ * get list of job 
+ * findall will get all result of job from job table
+ */
 
 module.exports = (req, callback) => {
 
+    
+    
+    model[jobModel].findAll({
 
-
-    model[orderlocationModel].findAll({
-
-
-        order: [['id', 'DESC']],
-
-        include:[
-            {model:model[orderModel],as:'items'}
-        ]
+     
+       
+        order: [ [ 'id', 'DESC' ]]
 
 
     }).then(orderlist => {
-
-
-
         return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderlist));
 
 

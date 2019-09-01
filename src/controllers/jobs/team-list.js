@@ -6,24 +6,23 @@ const responses = require('../../utilities/responses');
 const model = require('../../models');
 const Op = model.Sequelize.Op;
 
-const jobModel = 'jobs';
+const teamModel = 'team';
 
 const moment=require('moment');
 
 module.exports = (req, callback) => {
 
-    console.log(req);
     
     
-    model[jobModel].findAll({
+    model[teamModel].findAll({
 
      
        
         order: [ [ 'id', 'DESC' ]]
 
 
-    }).then(orderlist => {
-        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, orderlist));
+    }).then(teamlist => {
+        return callback(null, responses.dataResponse(statusCodes.OK, responseMsg.FETCH_SUCCESSFULL, teamlist));
 
 
     })
