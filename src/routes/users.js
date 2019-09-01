@@ -9,7 +9,6 @@ const validator = require('../validators/users');
 const login = require('../controllers/users/login');
 const signUp = require('../controllers/users/sign-up');
 const cvList = require('../controllers/users/list');
-const mostviewCV=require('../controllers/users/most-view-cv');
 const updateProfile=require('../controllers/users/update-profile');
 const registeruserList=require('../controllers/users/register-user');
 const updatePassword=require('../controllers/users/update-password');

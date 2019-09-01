@@ -8,7 +8,7 @@
   </a>
 </p>
 
-# Loveedo
+# Job
 
 ## Installation
 

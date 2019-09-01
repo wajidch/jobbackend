@@ -6,11 +6,11 @@ const plugins = require('../../constants/routes-config');
 const responses = require('../utilities/responses');
 const config = require('../../configs/config');
 
-const validator = require('../validators/addorder');
-const addOrder= require('../controllers/order/add-order');
-const orderStatus=require('../controllers/order/order-status');
-const orderList=require('../controllers/order/all-order');
-const updateOrder=require('../controllers/order/update-order');
+const validator = require('../validators/job');
+const addjob= require('../controllers/jobs/add-job');
+const jobStatus=require('../controllers/jobs/job-status');
+const jobList=require('../controllers/jobs/all-job');
+const updateJob=require('../controllers/jobs/update-job');
 
 
 module.exports = [
@@ -18,14 +18,14 @@ module.exports = [
 
 {
     method: 'POST',
-    path: config.apiPrefix + '/order/addOrder',
+    path: config.apiPrefix + '/job/addJob',
     config: {
-        description: 'Add multiple order',
-        notes: 'Add multiple order.',
-        tags: ['api', 'Order'],
+        description: 'Add job',
+        notes: 'Add job.',
+        tags: ['api', 'Job'],
         auth: false,
         handler: (request, reply) => {
-            addOrder(request.payload, (err, results) => {
+            addjob(request.payload, (err, results) => {
                 if (err) {
                     console.log(err);
                     reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
@@ -35,7 +35,7 @@ module.exports = [
             });
         },
         validate: {
-            payload: validator.addOrder,
+            payload: validator.addJob,
             failAction: (request, reply, source, err) => {
                 reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
             }
@@ -45,15 +45,15 @@ module.exports = [
 },
   {
     method: 'GET',
-    path: config.apiPrefix + '/order/orderStatus',
+    path: config.apiPrefix + '/job/jobStatus',
     config: {
-        description: 'check status of order',
-        notes: 'check status of order.',
-        tags: ['api', 'Order'],
+        description: 'check status of job',
+        notes: 'check status of job.',
+        tags: ['api', 'Job'],
         auth: false,
 
         handler: (request, reply) => {
-            orderStatus(request.query, (err, results) => {
+            jobStatus(request.query, (err, results) => {
                 if (err) {
                     console.log(err);
                     reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
@@ -73,15 +73,15 @@ module.exports = [
 },
 {
     method: 'GET',
-    path: config.apiPrefix + '/order/orderList',
+    path: config.apiPrefix + '/job/jobList',
     config: {
-        description: 'all order list',
-        notes: 'all order list.',
-        tags: ['api', 'Order'],
+        description: 'all job list',
+        notes: 'all job list.',
+        tags: ['api', 'Job'],
         auth: false,
 
         handler: (request, reply) => {
-            orderList(request.query, (err, results) => {
+            jobList(request.query, (err, results) => {
                 if (err) {
                     console.log(err);
                     reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
@@ -102,14 +102,14 @@ module.exports = [
 
 {
     method: 'PUT',
-    path: config.apiPrefix + '/order/updateOrder',
+    path: config.apiPrefix + '/job/updateJob',
     config: {
-        description: 'updateOrder',
-        notes: 'updateOrder.',
-        tags: ['api', 'Order'],
+        description: 'updateJob',
+        notes: 'updateJob.',
+        tags: ['api', 'Job'],
         auth: false,
         handler: (request, reply) => {
-            updateOrder(request.payload, (err, results) => {
+            updateJob(request.payload, (err, results) => {
                 if (err) {
                     console.log(err);
                     reply(responses.makeMessageResponse(false, statusCodes.EXPECTATION_FAILED, err.message.replace(/[^a-zA-Z ]/g, ''))).code(statusCodes.INTERNAL_SERVER_ERROR);
@@ -119,7 +119,7 @@ module.exports = [
             });
         },
         validate: {
-            payload: validator.updateOrder,
+            payload: validator.updateJob,
             failAction: (request, reply, source, err) => {
                 reply(responses.makeMessageResponse(false, statusCodes.BAD_REQUEST, err.message.replace(/[^a-zA-Z ]/g, '')));
             }
